@@ -1,0 +1,60 @@
+### MacOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+.DocumentRevisions-V100
+.Spotlight-V100
+.Trashes
+
+### Python ###
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+### Environments (UV, Venv, Conda) ###
+.venv/
+venv/
+ENV/
+env/
+.env
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+### Testing & Coverage ###
+.target/
+.pytest_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+### IDEs (VS Code & PyCharm) ###
+.vscode/
+.idea/
+*.swp
+*.swo
