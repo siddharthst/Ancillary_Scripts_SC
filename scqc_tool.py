@@ -27,6 +27,7 @@ import os
 import logging
 import warnings
 import glob
+import gc
 
 # ── Logging setup ─────────────────────────────────────────────────────────────
 
@@ -1409,7 +1410,7 @@ def run_batch(cfg: dict, input_paths: list):
     """
     n = len(input_paths)
     log.info("╔══════════════════════════════════════════════════════════╗")
-    log.info("║  BATCH MODE  —  %d file(s) to process                   ║", n)
+    log.info("║  BATCH MODE  —  %d file(s) to process                    ║", n)
     log.info("╚══════════════════════════════════════════════════════════╝")
 
     output_dir = cfg.get("output_dir")
@@ -1440,6 +1441,15 @@ def run_batch(cfg: dict, input_paths: list):
             log.error("Pipeline failed for '%s': %s", sample_name, exc)
             failures[path] = str(exc)
             continue
+        finally:
+            # Free the AnnData object and any backing arrays immediately so
+            # memory is reclaimed before the next sample is loaded.
+            try:
+                del adata
+            except NameError:
+                pass  # adata was never assigned (pipeline raised before returning)
+            gc.collect()
+            log.debug("Memory released after processing '%s'", sample_name)
 
     # ── Batch summary ─────────────────────────────────────────────────────────
     log.info("")
