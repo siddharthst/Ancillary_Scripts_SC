@@ -261,7 +261,7 @@ def filter_cells_and_genes(
 # Normalization
 # ══════════════════════════════════════════════════════════════════════════════
 
-def normalize(adata, target_sum: float = 1e4, log1p: bool = True):
+def normalize(adata, target_sum: float = 10000, log1p: bool = True):
     import scanpy as sc
 
     log.info("Normalizing to %s counts per cell ...", f"{int(target_sum):,}")
@@ -270,7 +270,8 @@ def normalize(adata, target_sum: float = 1e4, log1p: bool = True):
         sc.pp.log1p(adata)
         log.info("log1p transform applied")
     adata.raw = adata
-    log.info("Raw counts stored in adata.raw")
+    adata.layers['log1p_norm'] = adata.X.copy()
+    log.info("Log1p normalized counts stored in layer log1p_norm")
     return adata
 
 
